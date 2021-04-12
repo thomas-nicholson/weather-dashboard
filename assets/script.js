@@ -31,9 +31,14 @@ function storeSaveHistory(queryString) {
 }
 
 function getSaveHistory() {
-    var searchHistory = JSON.parse(localStorage.getItem("searchHistory")).slice(-10);
-    queryApi(searchHistory[0], false);
-    renderSaveList(document.getElementById("search-history"), searchHistory);
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+
+    if (!searchHistory)
+        queryApi("Canberra", true);
+    else {
+        queryApi(searchHistory[0], false);
+        renderSaveList(document.getElementById("search-history"), searchHistory.slice(-10));
+    }    
 }
 
 function renderWeatherData(data, displayName) {
