@@ -1,10 +1,47 @@
+
+function renderSaveList(ul, searchHistory) {
+    while (ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+    }
+
+    for (i in searchHistory) {
+        var li = document.createElement("li");
+        var textNode = document.createTextNode(searchHistory[i]);
+        li.appendChild(textNode);
+        ul.insertBefore(li, ul.firstChild);
+    }
+}
+
+function storeSaveHistory(queryString) {
+
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+
+    if (!searchHistory) {
+        searchHistory = [];
+    }
+    searchHistory.push(queryString);
+
+    if (searchHistory.length >10)
+        searchHistory.slice(-1);
+    
+    renderSaveList(document.getElementById("search-history"), searchHistory);
+
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory.slice(-10)));
+}
+
+function getSaveHistory() {
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory")).slice(-10);
+    renderSaveList(document.getElementById("search-history"), searchHistory);
+    return searchHistory;
+}
+
 document.getElementById("search").addEventListener("submit", function(e) {
     e.preventDefault();
 
     var searchBox = document.getElementById("queryString");
 
-    console.log(queryString);
     var coordsUrl = "https://nominatim.openstreetmap.org/search?q="+ searchBox.value +"&format=json"
+    storeSaveHistory(searchBox.value);
     searchBox.value = "";
     fetch(coordsUrl)
         .then(data=>{return data.json()})
@@ -15,3 +52,5 @@ document.getElementById("search").addEventListener("submit", function(e) {
                 .then(res=>{console.log(res)});
         });
 });
+
+getSaveHistory();
