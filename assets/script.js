@@ -36,7 +36,7 @@ function getSaveHistory() {
     if (!searchHistory)
         queryApi("Canberra", true);
     else {
-        queryApi(searchHistory[0], false);
+        queryApi(searchHistory[searchHistory.length-1], false);
         renderSaveList(document.getElementById("search-history"), searchHistory.slice(-10));
     }    
 }
