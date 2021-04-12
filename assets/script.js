@@ -66,7 +66,22 @@ function renderWeatherData(data, displayName) {
             infoEl.appendChild(infoNode);
 
             //Render UV Index
-            var uvIndex = document.createTextNode(data.current.uvi);
+
+            var uvi = data.current.uvi;
+            var uvSpan = document.createElement("span");
+            uvSpan.style.marginLeft = "5px";
+            uvSpan.style.borderRadius = "5px";
+            uvSpan.style.paddingLeft = "5px";
+            uvSpan.style.paddingRight = "5px";
+
+            var uvIndex = document.createTextNode("UV Index: " +uvi);
+            if (uvi < 3) { uvSpan.setAttribute("class", "bg-primary text-white") } else
+            if (uvi < 6) { uvSpan.setAttribute("class", "bg-success text-white") } else
+            if (uvi < 8) { uvSpan.setAttribute("class", "bg-warning text-dark") } else
+            if (uvi < 10) { uvSpan.setAttribute("class", "bg-danger text-white") }
+            uvSpan.appendChild(uvIndex);
+            infoEl.appendChild(uvSpan);
+            
             continue;
         } 
      
