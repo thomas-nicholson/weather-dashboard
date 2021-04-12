@@ -32,12 +32,12 @@ function storeSaveHistory(queryString) {
 
 function getSaveHistory() {
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")).slice(-10);
+    queryApi(searchHistory[0], false);
     renderSaveList(document.getElementById("search-history"), searchHistory);
-    return searchHistory;
 }
 
 function renderWeatherData(data, displayName) {
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 6; i++) {
         if (i===0) {
             var todayEl = document.getElementById("weather-today");
 
@@ -98,19 +98,11 @@ function renderWeatherData(data, displayName) {
     }
 }
 
-document.getElementById("search").addEventListener("submit", function(e) {
-    e.preventDefault();
+function queryApi(string, shouldStore) {
+    var coordsUrl = "https://nominatim.openstreetmap.org/search?q="+ string +"&format=json"
+    if (shouldStore)
+        storeSaveHistory(string);
 
-    var searchBox = document.getElementById("queryString");
-
-    var queryString = searchBox.value;
-
-    if (queryString === "")
-        return;
-
-    var coordsUrl = "https://nominatim.openstreetmap.org/search?q="+ queryString +"&format=json"
-    storeSaveHistory(queryString);
-    searchBox.value = "";
     fetch(coordsUrl)
         .then(data=>{return data.json()})
         .then(coordRes=>{
@@ -118,10 +110,30 @@ document.getElementById("search").addEventListener("submit", function(e) {
             fetch(weatherUrl)
                 .then(data=>{return data.json()})
                 .then(res=>{
-                    console.log(res);
                     renderWeatherData(res, coordRes[0].display_name.split(",")[0]);
                 });
         });
+}
+
+document.getElementById("search").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    var searchBox = document.getElementById("queryString");
+
+    var queryString = searchBox.value;
+    searchBox.value = "";
+
+
+    if (queryString === "")
+        return;
+    queryApi(queryString, true);
+
+});
+
+document.getElementById("search-history").addEventListener("click",function(e) {
+    if(e.target && e.target.nodeName == "LI") {
+        queryApi(e.target.textContent, false);
+    }
 });
 
 getSaveHistory();
