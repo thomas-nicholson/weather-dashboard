@@ -7,27 +7,68 @@
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
-<body>
+<body class="container">
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-    <main>
-        <section>
+    <main class="row">
+        <section class="col-3">
             <form id="search">
-                <input id="queryString" value="" type="text" />
-                <input type="submit" />
+                <!-- <input id="queryString" value="" type="text" />
+                <input type="submit" /> -->
+                <div class="input-group mb-3">
+                    <input id="queryString" type="text" class="form-control" placeholder="search...">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
+                    </div>
+                </div>
             </form>
-            <ul id="search-history">
-            </ul>
+            <div class="card">
+                <ul class="list-group list-group-flush" id="search-history">
+                </ul>
+              </div>
         </section>
         
-        <section>
-            <div>
-                Main Weather element
+        <section class="col-9">
+            <div class="card">
+                <div class="card-body" id="weather-today">
+                    <h1 class="card-title">Card title</h1>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>                
+                </div>
             </div>
-            <div>
-                5 Day Forecast
-            </div>
+            <div class="row row-cols-1 row-cols-sm-5 5-day-forecast" style="padding-left: 15px; padding-right: 15px;">
+                <div class="col mb-5 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+                <div class="col mb-5 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+                <div class="col mb-5 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+                <div class="col mb-5 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+                <div class="col mb-5 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+                
+              </div>
         </section>
     </main>
     <script src="assets/script.js"></script>
