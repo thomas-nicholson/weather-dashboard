@@ -74,7 +74,7 @@ function renderWeatherData(data, displayName) {
             uvSpan.style.paddingLeft = "5px";
             uvSpan.style.paddingRight = "5px";
 
-            var uvIndex = document.createTextNode("UV Index: " +uvi);
+            var uvIndex = document.createTextNode("UVI:" +uvi);
             if (uvi < 3) { uvSpan.setAttribute("class", "bg-primary text-white") } else
             if (uvi < 6) { uvSpan.setAttribute("class", "bg-success text-white") } else
             if (uvi < 8) { uvSpan.setAttribute("class", "bg-warning text-dark") } else
